@@ -50,19 +50,20 @@ export default class Playground {
 
     add(object) {
         this.objects.push(object);
-        console.log('this.objects', this.objects);
     }
 
     init() {
          let groups = [
-            {color: '#e74c3c', amount: 5000},
-            {color: '#e67e22', amount: 1000},
-            {color: '#ecf0f1', amount: 1000}
+            {color: '#7f8c8d', amount: 250},
+            {color: '#e74c3c', amount: 100},
+            //{color: '#e67e22', amount: 1000},
+            //{color: '#ecf0f1', amount: 1000}
         ];
 
         _.forEach(groups, (group) => {
             let newGroup = new PointsCollection(group.color, this.boundary);
             newGroup.createPoints(group.amount);
+            newGroup.createLinks();
             this.add(newGroup);
         });
 

@@ -12,14 +12,14 @@ export default class Point {
         };
         this.time = 0;
         this.color = color;
-        this.speed = 150;
+        this.speed = 1500;
         this.iteration = 0;
         this.name = name;
         this.destination = null;
+        this.links = null;
     }
 
     update() {
-        //console.log('this:', this.x, this.y);
         this.move();
         this.iteration++;
     }
@@ -40,8 +40,15 @@ export default class Point {
 
     draw(ctx) {
 
-        ctx.arc(this.x, this.y, 1, 0, 2 * Math.PI, false);
+        ctx.strokeStyle = this.color;//'#34495e';
+        _.forEach(this.links, (link) => {
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(link.x, link.y);
+        });
+        ctx.stroke();
 
+        //ctx.arc(this.x, this.y, 1, 0, 2 * Math.PI, false);
 
         /*//debug
         //draw destination with line

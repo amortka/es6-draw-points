@@ -4,7 +4,6 @@ var Util = {
     getClosestPoints: function(point, points, no) {
       var _this = this;
 
-
       points = points.map(function(p) {
         p.dist = _this.distanceBetweenPoints(point, p);
         return p;

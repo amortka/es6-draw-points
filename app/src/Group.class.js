@@ -22,6 +22,7 @@ export default class Group {
         this.offCtx.arc(this.radius/2, this.radius/2, this.radius, 0, 2 * Math.PI);
         this.offCtx.closePath();
         this.offCtx.fill();
+        this.iteration = 0;
 
     }
 
@@ -33,18 +34,16 @@ export default class Group {
 
     draw(ctx) {
         _.forEach(this.points, (point) => {
+            ctx.drawImage(this.offCanvas, 0, 0, this.radius*2, this.radius*2, point.x, point.y, this.radius*2, this.radius*2);
 
-
-            //ctx.drawImage(this.offCanvas, 0, 0, this.radius*2, this.radius*2, point.x, point.y, this.radius*2, this.radius*2);
-
-
-
+            point.draw(ctx);
+            /*
             ctx.fillStyle = this.color;
             ctx.beginPath();
             point.draw(ctx);
             ctx.closePath();
             ctx.fill();
-
+            */
         })
     }
 

@@ -13,7 +13,6 @@ export default class PointsCollection extends Group {
     update() {
         super.update();
 
-
         if (!_.some(this.points, function (point) {
                 return !_.isNull(point.destination);
             })) {
@@ -22,6 +21,20 @@ export default class PointsCollection extends Group {
             }, 10);
         }
 
+        if (this.iteration % 2 === 0) {
+            this.createLinks()
+        }
+
+        this.iteration++;
+    }
+
+    createLinks() {
+        _.forEach(this.points, (point) => {
+            point.links = Util.getClosestPoints(point, this.points, 3);
+        });
+
+
+        //console.table(this.points);
     }
 
     movePoints(pattern) {
