@@ -32,7 +32,6 @@ export default class Playground {
         _.forEach(this.objects, (object) => {
             if (_.isFunction(object.draw)) {
                 object.draw(this.ctx);
-                //                this.dirty = true;
             }
         });
     }
@@ -42,34 +41,31 @@ export default class Playground {
             if (_.isFunction(object.update)) {
                 object.update();
             }
-
         });
 
-
-        if (!_.some(this.objects, function (object) {
-                return !_.isNull(object.destination);
-            })) {
-            setTimeout(()=> {
-                this.points.movePoints('sin');
-            }, 10);
-
-        }
-        
         this.draw();
 
         this.raf = requestAnimationFrame(this.update.bind(this));
     }
 
-    add(objects) {
-        this.objects = this.objects.concat(objects);
+    add(object) {
+        this.objects.push(object);
+        console.log('this.objects', this.objects);
     }
 
     init() {
-        this.points = new PointsCollection(this.boundary);
-        this.points.createPoints(1500);
-        this.points.movePoints('sin');
+         let groups = [
+            {color: '#e74c3c', amount: 5000},
+            {color: '#e67e22', amount: 1000},
+            {color: '#ecf0f1', amount: 1000}
+        ];
 
-        this.add(this.points.getPoints());
+        _.forEach(groups, (group) => {
+            let newGroup = new PointsCollection(group.color, this.boundary);
+            newGroup.createPoints(group.amount);
+            this.add(newGroup);
+        });
+
 
         this.update();
     }

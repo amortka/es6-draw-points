@@ -12,9 +12,10 @@ export default class Point {
         };
         this.time = 0;
         this.color = color;
-        this.speed = 50;
+        this.speed = 150;
         this.iteration = 0;
         this.name = name;
+        this.destination = null;
     }
 
     update() {
@@ -38,26 +39,24 @@ export default class Point {
     }
 
     draw(ctx) {
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, 2, 0, 2 * Math.PI, false);
-        ctx.closePath();
-        ctx.fill();
 
-        //debug
+        ctx.arc(this.x, this.y, 1, 0, 2 * Math.PI, false);
+
+
+        /*//debug
         //draw destination with line
-        /*if (this.destination && !_.isNull(this.destination)) {
-            ctx.fillStyle = '#7f8c8d';
+        if (this.destination && !_.isNull(this.destination)) {
+            ctx.fillStyle = '#bdc3c7';
             ctx.beginPath();
-            ctx.arc(this.destination.x, this.destination.y, 2, 0, 2 * Math.PI, false);
+            ctx.arc(this.destination.x, this.destination.y, 1, 0, 2 * Math.PI, false);
             ctx.closePath();
             ctx.fill();
 
-            ctx.strokeStyle = '#2e4154';
-            ctx.beginPath();
-            ctx.moveTo(this.x, this.y);
-            ctx.lineTo(this.destination.x, this.destination.y);
-            ctx.stroke();
+            //ctx.strokeStyle = '#2e4154';
+            //ctx.beginPath();
+            //ctx.moveTo(this.x, this.y);
+            //ctx.lineTo(this.destination.x, this.destination.y);
+            //ctx.stroke();
 
         }*/
 

@@ -1,43 +1,46 @@
 'use strict';
 
 import _ from 'lodash';
+import Group from './Group.class';
 import Point from './Point.class';
 import Util from './Util';
 
-export default class PointsCollection {
-    constructor(boundary) {
-        this.boundary = boundary;        
-        this.points = [];
-        this.center = { x:boundary.width / 2, y:boundary.height / 2 };
+export default class PointsCollection extends Group {
+    constructor(boundary, color) {
+        super(boundary, color);
     }
-    
-    createPoints(amount) {
-        for (let i=0; i<amount; i++) {
-            let x = Math.random() * this.boundary.width;
-            let y = Math.random() * this.boundary.height;
-            let point =  new Point(x, y, 'p-'+i);
-            
-            this.points.push(point)
+
+    update() {
+        super.update();
+
+
+        if (!_.some(this.points, function (point) {
+                return !_.isNull(point.destination);
+            })) {
+            setTimeout(()=> {
+                this.movePoints('sin');
+            }, 10);
         }
+
     }
-    
+
     movePoints(pattern) {
         let newPoints = _.shuffle(this.getPattern(pattern));
 
         _.forEach(this.points, (point) => {
             /*
              let closest = Util.getClosestPoint(point, newPoints);
-            let idx = _.findIndex(newPoints, (newPoint) => {
-                return closest.x === newPoint.x && closest.y === newPoint.y;
-            });
-            newPoints.splice(idx, 1);
+             let idx = _.findIndex(newPoints, (newPoint) => {
+             return closest.x === newPoint.x && closest.y === newPoint.y;
+             });
+             newPoints.splice(idx, 1);
 
-            point.destination = closest;
-            */
+             point.destination = closest;
+             */
             point.destination = newPoints.pop();
         });
     }
-    
+
     getPattern(pattern) {
         let points = [];
         let amount = this.points.length;
@@ -51,11 +54,11 @@ export default class PointsCollection {
             let step = 1 / amount;
 
 
-            for (let i=0; i < amount; i++) {
+            for (let i = 0; i < amount; i++) {
                 let angle = (step * i) * Math.PI * 2;
                 let x = this.center.x + radius * Math.cos(angle);
                 let y = this.center.y + radius * Math.sin(angle);
-                let point =  new Point(x, y);
+                let point = new Point(x, y);
                 points.push(point);
             }
         } else if (pattern === 'sin') {
@@ -73,7 +76,7 @@ export default class PointsCollection {
 
         return points;
     }
-    
+
     getPoints() {
         return this.points;
     }

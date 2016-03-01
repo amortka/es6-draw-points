@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "dist": "webpack -p --config webpack.config.js",
-    "dev": "webpack-dev-server --hot --inline --colors --content-base app/"
+    "dev": "webpack-dev-server --hot --inline --colors --content-base app/ --devtool inline-source-map"
   },
   "keywords": [],
   "author": "",
