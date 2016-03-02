@@ -15,7 +15,6 @@ export default class Playground {
         this.canvas.height = this.canvas.clientHeight;
 
         this.dirty = true;
-        this.startTime = null;
         this.raf = null;
 
         this.boundary = new Rect(0, 0, this.canvas.width, this.canvas.height);
@@ -36,15 +35,16 @@ export default class Playground {
         });
     }
 
-    update() {
+    update(time) {
         _.forEach(this.objects, (object) => {
             if (_.isFunction(object.update)) {
                 object.update();
             }
         });
-
         this.draw();
 
+
+        this.time = time;
         this.raf = requestAnimationFrame(this.update.bind(this));
     }
 
@@ -53,12 +53,13 @@ export default class Playground {
     }
 
     init() {
-         let groups = [
-            {color: '#7f8c8d', amount: 250},
-            {color: '#e74c3c', amount: 100},
-            {color: '#e67e22', amount: 100},
-            //{color: '#ecf0f1', amount: 1000}
+        let groups = [
+            {color: '#e74c3c', amount: 200},
+            {color: '#3498db', amount: 200},
+            {color: '#9b59b6', amount: 200}
         ];
+
+//        groups = [{color: '#e74c3c', amount: 5}];
 
         _.forEach(groups, (group) => {
             let newGroup = new PointsCollection(group.color, this.boundary);

@@ -21,8 +21,8 @@ export default class PointsCollection extends Group {
             }, 10);
         }
 
-        if (this.iteration % 2 === 0) {
-            this.createLinks()
+        if (this.iteration % 3 === 0) {
+            //this.createLinks()
         }
 
         this.iteration++;
@@ -30,11 +30,8 @@ export default class PointsCollection extends Group {
 
     createLinks() {
         _.forEach(this.points, (point) => {
-            point.links = Util.getClosestPoints(point, this.points, 3);
+            point.links = Util.getRandomPoints(this.points, 3);
         });
-
-
-        //console.table(this.points);
     }
 
     movePoints(pattern) {

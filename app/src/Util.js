@@ -2,26 +2,30 @@
 
 var Util = {
     getClosestPoints: function (point, points, no) {
-        var _this = this;
+        let sorted = this.sortByDistance(point, points);
 
-        points = points.map(function (p) {
-            p.dist = _this.distanceBetweenPoints(point, p);
-            return p;
+        return sorted.slice(1, no);
+    },
+    sortByDistance: function(point, points) {
+        points.sort((p1, p2) => {
+            p1.distance = this.distanceBetweenPoints(point, p1);
+            p2.distance = this.distanceBetweenPoints(point, p2);
+
+            return p1.distance - p2.distance;
         });
 
-        var pointsByDistance = points.sort(function (p1, p2) {
-            return p1.dist - p2.dist;
-        });
-
-        if (!_.isUndefined(no) && no < pointsByDistance.length) {
-
-            return pointsByDistance.slice(0, no);
-        }
-
-        return pointsByDistance;
+        return points;
     },
     getClosestPoint: function (point, points) {
         return this.getClosestPoints(point, points)[0]
+    },
+    getRandomPoints: function(points, no) {
+        var randomPoints = [];
+        var amount = points.length;
+        for (var i=0; i<no; i++) {
+            randomPoints.push(points[this.rand(0, amount-1)]);
+        }
+        return randomPoints;
     },
     distanceBetweenPoints: function (p1, p2) {
         return (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y);

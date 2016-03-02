@@ -13,7 +13,7 @@ export default class Point {
         this.time = 0;
         this.color = color;
         this.hsl = Util.hex2hsl(color);
-        this.speed = 1000;
+        this.speed = Util.rand(100, 300);
         this.iteration = 0;
         this.name = name;
         this.destination = null;
@@ -28,8 +28,11 @@ export default class Point {
     move() {
         if (this.destination && this.destination !== null) {
             //move a bit to the dest.
+            //this.x = Util.easeInOutQuad(this.iteration, this.x, this.destination.x - this.x, this.speed);
+            //this.y = Util.easeInOutQuad(this.iteration, this.y, this.destination.y - this.y, this.speed);
             this.x = Util.easeInOutQuad(this.iteration, this.x, this.destination.x - this.x, this.speed);
             this.y = Util.easeInOutQuad(this.iteration, this.y, this.destination.y - this.y, this.speed);
+
             if (Util.distanceBetweenPoints(this, this.destination) < 1) {
                 this.destination = null;
             }
@@ -39,22 +42,18 @@ export default class Point {
         }
     }
 
-    draw(ctx) {
-
-        ctx.globalCompositeOperation = 'lighter';
-        ctx.strokeStyle = 'red';//this.color;//'#34495e';
-//        ctx.strokeStyle = 'hsla('+Util.rand(100,300)+', 100%, '+Util.rand(50, 75)+'%, 0.5)';
-        ctx.strokeStyle = 'hsla('+Util.rand(this.hsl.h-30, this.hsl.h+30)+', 100%, '+Util.rand(50, 75)+'%, 0.5)';
-        
+    drawLinks(ctx) {
         ctx.beginPath();
         _.forEach(this.links, (link) => {
             ctx.moveTo(this.x, this.y);
             ctx.lineTo(link.x, link.y);
         });
         ctx.stroke();
-        ctx.globalCompositeOperation = 'source-over';
-        //ctx.arc(this.x, this.y, 1, 0, 2 * Math.PI, false);
+    }
 
+    draw(ctx) {
+        //ctx.strokeStyle = 'red';//this.color;//'#34495e';
+        //ctx.arc(this.x, this.y, 1, 0, 2 * Math.PI, false);
         /*//debug
         //draw destination with line
         if (this.destination && !_.isNull(this.destination)) {
