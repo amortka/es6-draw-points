@@ -56,7 +56,7 @@ export default class Playground {
          let groups = [
             {color: '#7f8c8d', amount: 250},
             {color: '#e74c3c', amount: 100},
-            //{color: '#e67e22', amount: 1000},
+            {color: '#e67e22', amount: 100},
             //{color: '#ecf0f1', amount: 1000}
         ];
 

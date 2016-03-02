@@ -12,7 +12,8 @@ export default class Point {
         };
         this.time = 0;
         this.color = color;
-        this.speed = 1500;
+        this.hsl = Util.hex2hsl(color);
+        this.speed = 1000;
         this.iteration = 0;
         this.name = name;
         this.destination = null;
@@ -40,14 +41,18 @@ export default class Point {
 
     draw(ctx) {
 
-        ctx.strokeStyle = this.color;//'#34495e';
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.strokeStyle = 'red';//this.color;//'#34495e';
+//        ctx.strokeStyle = 'hsla('+Util.rand(100,300)+', 100%, '+Util.rand(50, 75)+'%, 0.5)';
+        ctx.strokeStyle = 'hsla('+Util.rand(this.hsl.h-30, this.hsl.h+30)+', 100%, '+Util.rand(50, 75)+'%, 0.5)';
+        
+        ctx.beginPath();
         _.forEach(this.links, (link) => {
-            ctx.beginPath();
             ctx.moveTo(this.x, this.y);
             ctx.lineTo(link.x, link.y);
         });
         ctx.stroke();
-
+        ctx.globalCompositeOperation = 'source-over';
         //ctx.arc(this.x, this.y, 1, 0, 2 * Math.PI, false);
 
         /*//debug
