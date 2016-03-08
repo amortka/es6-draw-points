@@ -38,20 +38,11 @@ export default class PointsCollection extends Group {
         let newPoints = _.shuffle(this.getPattern(pattern));
 
         _.forEach(this.points, (point) => {
-            /*
-             let closest = Util.getClosestPoint(point, newPoints);
-             let idx = _.findIndex(newPoints, (newPoint) => {
-             return closest.x === newPoint.x && closest.y === newPoint.y;
-             });
-             newPoints.splice(idx, 1);
-
-             point.destination = closest;
-             */
             point.destination = newPoints.pop();
         });
     }
 
-    getPattern(pattern) {
+    getPattern(pattern='circle') {
         let points = [];
         let amount = this.points.length;
 

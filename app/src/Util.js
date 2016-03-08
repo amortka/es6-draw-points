@@ -91,6 +91,22 @@ var Util = {
         s *= 100;
         l *= 100;
         return {h, s, l};
+    },
+    getAngle: function(p1, p2) {
+        return Math.atan2(p2.y - p1.y, p2.x - p1.x);
+    },
+    getAngleDeg: function(p1, p2) {
+        let deg = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
+        //console.log('deg', deg);
+        return deg;
+    },
+    /* ----------------------- */
+    rad2deg: function(rad) {
+        return radians * (180/Math.PI)
+    },
+    deg2rad: function(deg) {
+        return degrees * (Math.PI/180)
     }
+    
 }
 export default Util;

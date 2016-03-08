@@ -11,6 +11,7 @@ export default class Point {
             y: this.y
         };
         this.time = 0;
+        this.radius = 1;
         this.color = color;
         this.hsl = Util.hex2hsl(color);
         this.speed = Util.rand(100, 300);
@@ -24,12 +25,18 @@ export default class Point {
         this.move();
         this.iteration++;
     }
+    
+    setColorByAngle(angle) {
+       this.hsl = {
+            h: angle,
+            s: '100',
+            l: Util.rand(30, 75)
+       };
+    }
 
     move() {
         if (this.destination && this.destination !== null) {
             //move a bit to the dest.
-            //this.x = Util.easeInOutQuad(this.iteration, this.x, this.destination.x - this.x, this.speed);
-            //this.y = Util.easeInOutQuad(this.iteration, this.y, this.destination.y - this.y, this.speed);
             this.x = Util.easeInOutQuad(this.iteration, this.x, this.destination.x - this.x, this.speed);
             this.y = Util.easeInOutQuad(this.iteration, this.y, this.destination.y - this.y, this.speed);
 
@@ -37,12 +44,12 @@ export default class Point {
                 this.destination = null;
             }
         } else {
-            //this.destination = Util.getRandomPointInRadius(_point.origin, POINTS_MOVE_DIST);
             this.iteration = 0;
         }
     }
 
     drawLinks(ctx) {
+        ctx.strokeStyle = 'hsla('+Util.rand(this.hsl.h-30, this.hsl.h+30)+', 100%, '+Util.rand(40, 75)+'%, 0.07)';            
         ctx.beginPath();
         _.forEach(this.links, (link) => {
             ctx.moveTo(this.x, this.y);
@@ -52,24 +59,11 @@ export default class Point {
     }
 
     draw(ctx) {
-        //ctx.strokeStyle = 'red';//this.color;//'#34495e';
-        //ctx.arc(this.x, this.y, 1, 0, 2 * Math.PI, false);
-        /*//debug
-        //draw destination with line
-        if (this.destination && !_.isNull(this.destination)) {
-            ctx.fillStyle = '#bdc3c7';
-            ctx.beginPath();
-            ctx.arc(this.destination.x, this.destination.y, 1, 0, 2 * Math.PI, false);
-            ctx.closePath();
-            ctx.fill();
-
-            //ctx.strokeStyle = '#2e4154';
-            //ctx.beginPath();
-            //ctx.moveTo(this.x, this.y);
-            //ctx.lineTo(this.destination.x, this.destination.y);
-            //ctx.stroke();
-
-        }*/
-
+        ctx.fillStyle = 'hsla('+Util.rand(this.hsl.h-30, this.hsl.h+30)+', 100%, '+Util.rand(30, 75)+'%, 0.1)'; 
+        ctx.beginPath();
+        ctx.arc(this.x + this.radius/2, this.y + this.radius/2, this.radius, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.fill();
+        this.drawLinks(ctx);
     }
 }
