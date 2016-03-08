@@ -21,10 +21,6 @@ export default class PointsCollection extends Group {
             }, 10);
         }
 
-        if (this.iteration % 3 === 0) {
-            //this.createLinks()
-        }
-
         this.iteration++;
     }
 

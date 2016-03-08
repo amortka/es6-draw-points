@@ -35,11 +35,15 @@ export default class Playground {
                 object.update();
             }
         });
-        this.draw();
-
-
+        
         this.time = time;
-        this.raf = requestAnimationFrame(this.update.bind(this));
+    }
+    
+    loop() {
+        this.update();
+        this.draw();
+        
+        this.raf = requestAnimationFrame(this.loop.bind(this));
     }
 
     add(object) {
@@ -66,13 +70,10 @@ export default class Playground {
     
     init() {
         let groups = [
-           // {color: '#e74c3c', amount: 200}, 
-            {color: '#3498db', amount: 200},
-            {color: '#9b59b6', amount: 200},
-            {color: '#2ecc71', amount: 200}
+            {color: '#3498db', amount: 260},
+            {color: '#9b59b6', amount: 220},
+            {color: '#2ecc71', amount: 100}
         ];
-
-//        groups = [{color: '#e74c3c', amount: 500}];
 
         _.forEach(groups, (group) => {
             let newGroup = new PointsCollection(group.color, this.boundary);
@@ -81,8 +82,7 @@ export default class Playground {
             this.add(newGroup);
         });
 
-
-        this.update();
+        this.loop();
         
         window.addEventListener('resize', () => {
             this.prepareCanvas(window.innerWidth, window.innerHeight);    

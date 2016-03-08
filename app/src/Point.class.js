@@ -64,6 +64,7 @@ export default class Point {
         ctx.arc(this.x + this.radius/2, this.y + this.radius/2, this.radius, 0, 2 * Math.PI);
         ctx.closePath();
         ctx.fill();
+        
         this.drawLinks(ctx);
     }
 }
