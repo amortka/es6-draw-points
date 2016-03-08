@@ -6,10 +6,8 @@ export default class Point {
     constructor(x = 0, y = 0, name='', color = '#34495e') {
         this.x = x;
         this.y = y;
-        this.origin = {
-            x: this.x,
-            y: this.y
-        };
+        this.XY = {x, y};
+
         this.time = 0;
         this.radius = 1;
         this.color = color;
@@ -19,10 +17,21 @@ export default class Point {
         this.name = name;
         this.destination = null;
         this.links = null;
+        
+        this.rotation = 0;
+        this.origin = null;
+    }
+    
+    getXY() {
+        return {
+            x: this.x,
+            y: this.y
+        }
     }
 
     update() {
         this.move();
+        this.XY = _.isNull(this.origin) ? this.getXY() : Util.rotatePoint(this.getXY(), this.origin, this.rotation);
         this.iteration++;
     }
     
@@ -47,13 +56,18 @@ export default class Point {
             this.iteration = 0;
         }
     }
+    
+    rotate(angle, origin) {
+        this.rotation = angle;
+        this.origin = origin;
+    }
 
     drawLinks(ctx) {
         ctx.strokeStyle = 'hsla('+Util.rand(this.hsl.h-30, this.hsl.h+30)+', 100%, '+Util.rand(40, 75)+'%, 0.07)';            
         ctx.beginPath();
         _.forEach(this.links, (link) => {
-            ctx.moveTo(this.x, this.y);
-            ctx.lineTo(link.x, link.y);
+            ctx.moveTo(this.XY.x, this.XY.y);
+            ctx.lineTo(link.XY.x, link.XY.y);
         });
         ctx.stroke();
     }
@@ -61,7 +75,7 @@ export default class Point {
     draw(ctx) {
         ctx.fillStyle = 'hsla('+Util.rand(this.hsl.h-30, this.hsl.h+30)+', 100%, '+Util.rand(30, 75)+'%, 0.1)'; 
         ctx.beginPath();
-        ctx.arc(this.x + this.radius/2, this.y + this.radius/2, this.radius, 0, 2 * Math.PI);
+        ctx.arc(this.XY.x + this.radius/2, this.XY.y + this.radius/2, this.radius, 0, 2 * Math.PI);
         ctx.closePath();
         ctx.fill();
         

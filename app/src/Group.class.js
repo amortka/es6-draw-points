@@ -5,11 +5,13 @@ import Util from './Util';
 
 export default class Group {
 
-    constructor(color, boundary) {
+    constructor(color, boundary, rotationSpeed=0) {
         this.setBoundary(boundary);
         this.points = [];
         this.color = color;
         this.amount = 0;
+        this.rotation = 0;
+        this.rotationSpeed = rotationSpeed;
 
         this.radius = 1;
 
@@ -34,15 +36,19 @@ export default class Group {
 
     update() {
         _.forEach(this.points, (point) => {
+            point.rotate(this.rotation, this.center);
             point.update();
         })
+        
+        this.rotation += this.rotationSpeed;
     }
 
     draw(ctx) {
         ctx.globalCompositeOperation = 'lighter';
 
         _.forEach(this.points, (point) => {
-            ctx.drawImage(this.offCanvas, 0, 0, this.radius*2, this.radius*2, point.x, point.y, this.radius*2, this.radius*2);
+            //ctx.drawImage(this.offCanvas, 0, 0, this.radius*2, this.radius*2, point.x, point.y, this.radius*2, this.radius*2);
+            //point.draw(ctx);
             point.drawLinks(ctx);
         })
         ctx.globalCompositeOperation = 'source-over';

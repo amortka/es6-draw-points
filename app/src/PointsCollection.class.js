@@ -6,8 +6,10 @@ import Point from './Point.class';
 import Util from './Util';
 
 export default class PointsCollection extends Group {
-    constructor(boundary, color) {
-        super(boundary, color);
+    constructor(boundary, color, rotationSpeed=0, density) {
+        super(boundary, color, rotationSpeed);
+        
+        this.density = density;
     }
 
     update() {
@@ -45,12 +47,10 @@ export default class PointsCollection extends Group {
         let shortest = Math.min(this.boundary.width, this.boundary.height);
 
         let radius = Math.random() * (shortest * 0.5 - 20) + 20;
-        let density = Math.floor(Math.random() * 20) + 1;
+        let density = this.density ? this.density : Math.floor(Math.random() * 20) + 1;
 
         if (pattern === 'circle') {
             let step = 1 / amount;
-
-
             for (let i = 0; i < amount; i++) {
                 let angle = (step * i) * Math.PI * 2;
                 let x = this.center.x + radius * Math.cos(angle);
@@ -62,7 +62,7 @@ export default class PointsCollection extends Group {
             let step = (Math.PI * 2) / amount;
 
             for (let i = 0; i < amount; i++) {
-                let radiusModifier = Math.sin(step * i * density) * shortest * 0.1;//* (Math.random() < 0.5 ? -1 : 1);
+                let radiusModifier = density > 1 ? Math.sin(step * i * density) * shortest * 0.1 : 0;//* (Math.random() < 0.5 ? -1 : 1);
                 let angle = step * i;
                 let x = this.center.x + (radius + radiusModifier) * Math.cos(angle);
                 let y = this.center.y + (radius + radiusModifier) * Math.sin(angle);

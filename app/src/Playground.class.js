@@ -70,13 +70,15 @@ export default class Playground {
     
     init() {
         let groups = [
-            {color: '#3498db', amount: 260},
-            {color: '#9b59b6', amount: 220},
-            {color: '#2ecc71', amount: 100}
+            {color: '#3498db', amount: 260, rotation: -0.8, density: 1},
+            {color: '#9b59b6', amount: 220, rotation: 0.7},
+            {color: '#2ecc71', amount: 100, rotation: 0.6}
         ];
+        
+        //groups = [{color: '#3498db', amount: 20}];
 
         _.forEach(groups, (group) => {
-            let newGroup = new PointsCollection(group.color, this.boundary);
+            let newGroup = new PointsCollection(group.color, this.boundary, group.rotation, group.density);
             newGroup.createPoints(group.amount);
             newGroup.createLinks();
             this.add(newGroup);

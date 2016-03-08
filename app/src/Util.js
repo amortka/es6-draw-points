@@ -97,8 +97,15 @@ var Util = {
     },
     getAngleDeg: function(p1, p2) {
         let deg = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
-        //console.log('deg', deg);
         return deg;
+    },
+    rotatePoint: function(point, origin, angle) {
+        angle *= Math.PI / 180.0;
+        
+        return {
+            x: Math.cos(angle) * (point.x-origin.x) - Math.sin(angle) * (point.y-origin.y) + origin.x,
+            y: Math.sin(angle) * (point.x-origin.x) + Math.cos(angle) * (point.y-origin.y) + origin.y
+        }        
     },
     /* ----------------------- */
     rad2deg: function(rad) {
