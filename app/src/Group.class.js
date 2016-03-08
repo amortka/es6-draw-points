@@ -34,7 +34,6 @@ export default class Group {
 
     update() {
         _.forEach(this.points, (point) => {
-            //point.setColorByAngle(Util.getAngleDeg(this.center, point));
             point.update();
         })
     }
