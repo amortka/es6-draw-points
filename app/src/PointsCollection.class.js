@@ -6,9 +6,9 @@ import Point from './Point.class';
 import Util from './Util';
 
 export default class PointsCollection extends Group {
-    constructor(boundary, color, rotationSpeed=0, density) {
+    constructor(boundary, color, rotationSpeed = 0, density = 0) {
         super(boundary, color, rotationSpeed);
-        
+
         this.density = density;
     }
 
@@ -29,6 +29,7 @@ export default class PointsCollection extends Group {
     createLinks() {
         _.forEach(this.points, (point) => {
             point.links = Util.getRandomPoints(this.points, 3);
+            //point.links = Util.getClosestPoints(point, this.points, 3);
         });
     }
 
@@ -40,7 +41,7 @@ export default class PointsCollection extends Group {
         });
     }
 
-    getPattern(pattern='circle') {
+    getPattern(pattern = 'circle') {
         let points = [];
         let amount = this.points.length;
 

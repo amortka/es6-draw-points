@@ -70,9 +70,9 @@ export default class Playground {
     
     init() {
         let groups = [
-            {color: '#3498db', amount: 260, rotation: -0.8, density: 1},
-            {color: '#9b59b6', amount: 220, rotation: 0.7},
-            {color: '#2ecc71', amount: 100, rotation: 0.6}
+            {color: '#3498db', amount: 220, rotation: -0.4, density: 1},
+            {color: '#9b59b6', amount: 250, rotation: 0.3},
+            {color: '#2ecc71', amount: 280, rotation: 0.2}
         ];
         
         //groups = [{color: '#3498db', amount: 20}];

@@ -38,7 +38,7 @@ export default class Group {
         _.forEach(this.points, (point) => {
             point.rotate(this.rotation, this.center);
             point.update();
-        })
+        });
         
         this.rotation += this.rotationSpeed;
     }

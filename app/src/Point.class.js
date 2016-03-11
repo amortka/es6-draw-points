@@ -63,7 +63,7 @@ export default class Point {
     }
 
     drawLinks(ctx) {
-        ctx.strokeStyle = 'hsla('+Util.rand(this.hsl.h-30, this.hsl.h+30)+', 100%, '+Util.rand(40, 75)+'%, 0.07)';            
+        ctx.strokeStyle = 'hsla('+Util.rand(this.hsl.h-30, this.hsl.h+30)+', 100%, '+Util.rand(40, 75)+'%, 0.09)';
         ctx.beginPath();
         _.forEach(this.links, (link) => {
             ctx.moveTo(this.XY.x, this.XY.y);
@@ -79,6 +79,6 @@ export default class Point {
         ctx.closePath();
         ctx.fill();
         
-        this.drawLinks(ctx);
+        //this.drawLinks(ctx);
     }
 }
